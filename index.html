@@ -39,6 +39,124 @@
             --r: 14px;
             --rpill: 999px;
         }
+        /* ── themes (Nebula-style: body[data-theme] overrides) ── */
+        body[data-theme="light"] {
+            --bg: linear-gradient(135deg, #f0f2f5 0%, #e2e6ed 50%, #d5dae4 100%);
+            --bg2: #e6eaf1;
+            --card: rgba(255, 255, 255, 0.92);
+            --card2: rgba(255, 255, 255, 0.95);
+            --s3: rgba(20, 30, 60, 0.05);
+            --s4: rgba(20, 30, 60, 0.12);
+            --bdr: rgba(20, 30, 60, 0.08);
+            --bdr2: rgba(20, 30, 60, 0.14);
+            --red: #e02626;
+            --red2: #b30000;
+            --redglow: rgba(224, 38, 38, .15);
+            --redsoft: rgba(224, 38, 38, .08);
+            --fg: #141824;
+            --fg2: #3c4358;
+            --fg3: #7a8299;
+            --fg4: #c9cfdd;
+        }
+        body[data-theme="ocean"] {
+            --bg: radial-gradient(ellipse at 10% 15%, #041826 0%, #0f4c75 45%, #0e7490 75%, #155e75 100%);
+            --bg2: #06283a;
+            --red: #0ea5e9;
+            --red2: #0284c7;
+            --redglow: rgba(14, 165, 233, .18);
+            --redsoft: rgba(14, 165, 233, .08);
+        }
+        body[data-theme="sunset"] {
+            --bg: radial-gradient(ellipse at 10% 15%, #22091a 0%, #6a1b3d 40%, #b83b5e 70%, #c2622f 100%);
+            --bg2: #2b0e20;
+            --red: #ec4899;
+            --red2: #be185d;
+            --redglow: rgba(236, 72, 153, .18);
+            --redsoft: rgba(236, 72, 153, .08);
+        }
+        body[data-theme="forest"] {
+            --bg: radial-gradient(ellipse at 10% 15%, #030f0c 0%, #06211a 40%, #0a3d2e 75%, #14804f 100%);
+            --bg2: #071a13;
+            --red: #10b981;
+            --red2: #047857;
+            --redglow: rgba(16, 185, 129, .18);
+            --redsoft: rgba(16, 185, 129, .08);
+        }
+        body[data-theme="rosegold"] {
+            --bg: radial-gradient(ellipse at 10% 15%, #1a0a0a 0%, #3a1520 35%, #5a2035 60%, #7a2a4a 80%, #9a3a5a 100%);
+            --bg2: #220f16;
+            --red: #f472b6;
+            --red2: #db2777;
+            --redglow: rgba(244, 114, 182, .18);
+            --redsoft: rgba(244, 114, 182, .08);
+        }
+        /* light-theme surface fixes: translucent white becomes invisible on white */
+        body[data-theme="light"] .auth-card {
+            background: linear-gradient(180deg, rgba(255,255,255,.95), rgba(244,247,253,.9));
+        }
+        body[data-theme="light"] .setting-row,
+        body[data-theme="light"] .url-inp,
+        body[data-theme="light"] .field input,
+        body[data-theme="light"] .field textarea,
+        body[data-theme="light"] .dd-trigger,
+        body[data-theme="light"] .path-bar,
+        body[data-theme="light"] .hist-item,
+        body[data-theme="light"] .pop-stats,
+        body[data-theme="light"] .console,
+        body[data-theme="light"] .hist-search-wrap {
+            background: rgba(20, 30, 60, 0.04);
+            border-color: rgba(20, 30, 60, 0.1);
+        }
+        body[data-theme="light"] .setting-row:hover,
+        body[data-theme="light"] .url-inp:focus,
+        body[data-theme="light"] .dd-trigger:hover,
+        body[data-theme="light"] .path-bar:hover {
+            background: rgba(20, 30, 60, 0.07);
+        }
+        body[data-theme="light"] .dd-panel,
+        body[data-theme="light"] .user-popover,
+        body[data-theme="light"] .notif-popover,
+        body[data-theme="light"] .modal {
+            background: rgba(255, 255, 255, 0.94);
+            border-color: rgba(20, 30, 60, 0.1);
+        }
+        body[data-theme="light"] .topbar,
+        body[data-theme="light"] .footer-bar {
+            background: rgba(255, 255, 255, 0.75);
+            border-color: rgba(20, 30, 60, 0.08);
+        }
+        body[data-theme="light"] .glow { opacity: .4; }
+        /* ── liquid glass (Nebula-style site-wide toggle) ── */
+        body.liquid-glass .card,
+        body.liquid-glass .modal,
+        body.liquid-glass .auth-card,
+        body.liquid-glass .user-popover,
+        body.liquid-glass .notif-popover,
+        body.liquid-glass .topbar {
+            backdrop-filter: blur(32px) saturate(180%);
+            -webkit-backdrop-filter: blur(32px) saturate(180%);
+        }
+        body:not(.liquid-glass) .card,
+        body:not(.liquid-glass) .modal,
+        body:not(.liquid-glass) .auth-card,
+        body:not(.liquid-glass) .user-popover,
+        body:not(.liquid-glass) .notif-popover,
+        body:not(.liquid-glass) .topbar,
+        body:not(.liquid-glass) .dd-panel {
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+        }
+        body:not(.liquid-glass) .modal,
+        body:not(.liquid-glass) .auth-card {
+            background: var(--bg2);
+        }
+        /* ── reduce motion (accessibility) ── */
+        body.reduce-motion *,
+        body.reduce-motion *::before,
+        body.reduce-motion *::after {
+            animation-duration: .001s !important;
+            transition-duration: .001s !important;
+        }
         html,
         body {
             height: 100%;
@@ -1918,12 +2036,15 @@
             opacity: .35
         }
 
-        /* ── settings modal (premium grid) ── */
+        /* ── settings modal (premium grid, responsive) ── */
         .settings-modal-inner {
-            width: 560px;
-            max-height: 82vh;
+            width: min(620px, 94vw);
+            max-height: 86dvh;
             overflow-y: auto;
-            padding: 28px 28px 22px;
+            overscroll-behavior: contain;
+            -webkit-overflow-scrolling: touch;
+            padding: clamp(18px, 3.5vw, 28px);
+            padding-bottom: calc(clamp(18px, 3.5vw, 28px) + env(safe-area-inset-bottom, 0px));
             scrollbar-width: thin;
             scrollbar-color: var(--s4) transparent;
             position: relative;
@@ -1953,6 +2074,23 @@
             height: 28px;
             opacity: 0.7;
         }
+        .settings-head-sub {
+            font-size: 11px;
+            color: var(--fg3);
+            margin: 4px 0 0;
+        }
+        .settings-ver-pill {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 9px;
+            font-weight: 700;
+            background: var(--redsoft);
+            color: var(--red);
+            border: 1px solid rgba(255,255,255,0.08);
+            padding: 3px 10px;
+            border-radius: 999px;
+            margin-left: auto;
+            white-space: nowrap;
+        }
         .settings-section-label {
             font-size: 10px;
             font-weight: 700;
@@ -1968,14 +2106,14 @@
         }
         .settings-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
             gap: 12px;
         }
         .setting-row {
             display: flex;
             align-items: center;
-            gap: 14px;
-            padding: 14px 16px;
+            gap: 12px;
+            padding: 13px 14px;
             border-radius: 16px;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.06);
@@ -1995,6 +2133,10 @@
         }
         .setting-row:active {
             transform: scale(0.98);
+        }
+        .setting-row:focus-visible {
+            outline: 2px solid var(--red);
+            outline-offset: 2px;
         }
         .setting-row-ico {
             width: 40px;
@@ -2017,13 +2159,29 @@
             color: var(--fg);
             line-height: 1.2;
             letter-spacing: -0.01em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .setting-state-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--fg3);
+            flex-shrink: 0;
+            transition: all .3s;
+        }
+        .setting-row.is-on .setting-state-dot {
+            background: var(--grn);
+            box-shadow: 0 0 8px var(--grn);
         }
         .setting-row-sub {
             font-size: 10px;
             color: var(--fg3);
             margin-top: 2px;
             font-weight: 400;
-            opacity: 0.8;
+            opacity: 0.9;
+            line-height: 1.5;
         }
         .setting-row-right {
             display: flex;
@@ -2042,40 +2200,154 @@
             white-space: nowrap;
         }
 
-        /* Premium glass toggle */
+        /* Premium animated toggle (spring knob + glow pop) */
         .toggle-switch {
-            width: 44px;
-            height: 26px;
+            width: 48px;
+            height: 28px;
             border-radius: 999px;
             background: rgba(255, 255, 255, 0.06);
             border: 1px solid rgba(255, 255, 255, 0.08);
             position: relative;
             flex-shrink: 0;
             cursor: pointer;
-            transition: all 0.35s cubic-bezier(.2, .9, .4, 1.1);
+            transition: background .3s, border-color .3s, box-shadow .3s, transform .15s;
             box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
             backdrop-filter: blur(4px);
         }
+        .toggle-switch:hover {
+            transform: scale(1.06);
+        }
+        .toggle-switch:active {
+            transform: scale(.94);
+        }
+        .toggle-switch:focus-visible {
+            outline: 2px solid var(--red);
+            outline-offset: 2px;
+        }
         .toggle-switch.on {
-            background: rgba(255, 32, 32, 0.25);
+            background: var(--redsoft);
             border-color: var(--red);
-            box-shadow: 0 0 20px rgba(255, 32, 32, 0.15), inset 0 0 8px rgba(255, 32, 32, 0.1);
+            box-shadow: 0 0 20px var(--redglow), inset 0 0 8px var(--redglow);
+            animation: togglePop .35s cubic-bezier(.34, 1.56, .64, 1);
+        }
+        @keyframes togglePop {
+            0% { transform: scale(.9); }
+            55% { transform: scale(1.08); }
+            100% { transform: scale(1); }
         }
         .toggle-knob {
             position: absolute;
             top: 2px;
             left: 2px;
-            width: 20px;
-            height: 20px;
+            width: 22px;
+            height: 22px;
             border-radius: 50%;
             background: rgba(255,255,255,0.95);
             box-shadow: 0 2px 8px rgba(0,0,0,0.4);
-            transition: all 0.35s cubic-bezier(.34, 1.56, .64, 1);
+            transition: transform .35s cubic-bezier(.34, 1.8, .64, 1), background .25s, box-shadow .25s;
         }
         .toggle-switch.on .toggle-knob {
-            transform: translateX(18px);
+            transform: translateX(20px);
             background: #fff;
-            box-shadow: 0 2px 16px rgba(255, 32, 32, 0.4);
+            box-shadow: 0 2px 16px var(--redglow);
+        }
+
+        /* ── theme picker (Nebula-style swatches) ── */
+        .theme-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr));
+            gap: 10px;
+        }
+        .theme-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 14px;
+            background: rgba(255,255,255,0.03);
+            border: 2px solid rgba(255,255,255,0.06);
+            cursor: pointer;
+            transition: all .22s cubic-bezier(.2,.9,.4,1.1);
+            user-select: none;
+        }
+        .theme-option:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255,255,255,0.16);
+        }
+        .theme-option:active { transform: scale(.97); }
+        .theme-option:focus-visible {
+            outline: 2px solid var(--red);
+            outline-offset: 2px;
+        }
+        .theme-option.active-theme {
+            border-color: var(--red);
+            background: var(--redsoft);
+            box-shadow: 0 0 18px var(--redglow);
+        }
+        .theme-swatch {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            border: 2px solid rgba(255,255,255,0.2);
+            box-shadow: inset 0 2px 6px rgba(255,255,255,0.25), 0 2px 8px rgba(0,0,0,0.4);
+        }
+        .theme-option.active-theme .theme-swatch {
+            border-color: #fff;
+        }
+        .theme-name {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--fg);
+        }
+        .theme-check {
+            margin-left: auto;
+            font-size: 12px;
+            color: var(--red);
+            opacity: 0;
+            transition: opacity .2s;
+        }
+        .theme-option.active-theme .theme-check { opacity: 1; }
+
+        /* ── settings responsive: phones / tablets / small windows ── */
+        @media (max-width: 560px) {
+            #settings-modal {
+                align-items: flex-end;
+                padding: 0;
+            }
+            .settings-modal-inner {
+                width: 100%;
+                max-width: 100%;
+                max-height: 92dvh;
+                border-radius: 22px 22px 0 0;
+            }
+            .settings-grid { grid-template-columns: 1fr; }
+            .theme-grid { grid-template-columns: repeat(2, 1fr); }
+            .setting-row { min-height: 60px; }
+            .setting-row-ico { width: 34px; height: 34px; font-size: 16px; }
+        }
+        @media (min-width: 561px) and (max-width: 760px) {
+            .settings-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .setting-row, .toggle-switch, .toggle-knob, .theme-option {
+                transition-duration: .001s !important;
+            }
+        }
+
+        /* ── global small-screen fit ── */
+        .hero-title { font-size: clamp(24px, 6vw, 32px); }
+        @media (max-width: 560px) {
+            .page { padding: 16px 14px; }
+            .topbar { padding: 0 12px; gap: 8px; overflow-x: auto; }
+            .topnav { gap: 2px; }
+            .nav-btn { padding: 7px 12px; font-size: 11px; }
+            .tbar-name-full { display: none; }
+            .url-row { flex-wrap: wrap; }
+            .url-inp { min-width: 0; }
+            .opts-grid { grid-template-columns: 1fr; }
+            .dl-btn { width: 100%; justify-content: center; }
+            .hist-actions-bar { width: 100%; }
         }
 
         /* ── account items ── */
@@ -2550,9 +2822,145 @@
         .feedback-modal select option {
             background: var(--bg2);
         }
+
+        /* ── settings effects: toggles actually do something ── */
+        body.no-anim .hw,
+        body.no-anim .hero-chip {
+            animation: none !important;
+            opacity: 1 !important;
+            transform: none !important;
+            filter: none !important;
+        }
+        body.hide-console #console-log {
+            display: none;
+        }
+
+        /* ── premium Info modal ── */
+        .info-hero {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: linear-gradient(135deg, rgba(255,32,32,.12), rgba(255,32,32,.03));
+            border: 1px solid rgba(255,32,32,.18);
+            border-radius: 16px;
+            padding: 14px 16px;
+            margin-bottom: 14px;
+        }
+        .info-hero-logo {
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #ff2828, #aa0000);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 900;
+            font-size: 15px;
+            color: #fff;
+            flex-shrink: 0;
+            box-shadow: 0 4px 18px rgba(255,32,32,.35);
+        }
+        .info-hero-name {
+            font-family: 'Unbounded', sans-serif;
+            font-size: 16px;
+            font-weight: 900;
+        }
+        .info-hero-ver {
+            display: inline-block;
+            font-size: 9px;
+            font-weight: 700;
+            background: var(--red);
+            color: #fff;
+            border-radius: 999px;
+            padding: 2px 8px;
+            margin-left: 8px;
+            vertical-align: middle;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .info-hero-sub {
+            font-size: 11px;
+            color: var(--fg2);
+            margin-top: 3px;
+            line-height: 1.5;
+        }
+        .info-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+        .info-stat {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 10px 6px;
+            text-align: center;
+        }
+        .info-stat-n {
+            font-family: 'DM Mono', monospace;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--fg);
+        }
+        .info-stat-l {
+            font-size: 8px;
+            color: var(--fg3);
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            margin-top: 3px;
+        }
+        .info-feat {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            padding: 8px 10px;
+            border-radius: 10px;
+            font-size: 12px;
+            color: var(--fg2);
+            line-height: 1.5;
+        }
+        .info-feat:hover {
+            background: rgba(255,255,255,0.03);
+        }
+        .info-feat-ico {
+            font-size: 15px;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+        .info-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 8px;
+        }
+        .info-chip {
+            font-size: 10px;
+            font-weight: 600;
+            padding: 4px 11px;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.04);
+            color: var(--fg2);
+        }
+        .info-sysrow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            color: var(--fg2);
+            padding: 7px 10px;
+            border-radius: 10px;
+            background: rgba(0,0,0,0.25);
+            border: 1px solid rgba(255,255,255,0.05);
+            margin-bottom: 6px;
+            font-family: 'DM Mono', monospace;
+        }
+        .info-sysrow b { color: var(--fg); font-weight: 600; }
     </style>
 </head>
-<body>
+    <body>
+    <script>try{var _t=localStorage.getItem('idlr_theme')||'midnight';document.body.setAttribute('data-theme',_t);var _s=localStorage.getItem('idlr_settings');if(_s){var _p=JSON.parse(_s);if(_p.liquidGlass===false)document.body.classList.remove('liquid-glass');else document.body.classList.add('liquid-glass');if(_p.reduceMotion)document.body.classList.add('reduce-motion');if(!_p.animHero)document.body.classList.add('no-anim');if(!_p.consoleLog)document.body.classList.add('hide-console');}else{document.body.classList.add('liquid-glass');}}catch(e){}</script>
     <!-- Loading overlay (premium) -->
     <div id="loading-overlay">
         <div class="loader-logo">IDLR</div>
@@ -2757,23 +3165,23 @@
         <div class="modal-bg whatsnew-modal" id="whatsnew-modal" style="display:none" onclick="if(event.target===this)closeWhatsNew()">
             <div class="modal">
                 <button class="modal-close" onclick="closeWhatsNew()">✕</button>
-                <h3>🎉 What's New</h3>
+                <h3>🎉 What's New — v1.2.0</h3>
                 <div class="whatsnew-list">
                     <div class="whatsnew-item">
-                        <span class="icon">🔔</span>
-                        <span class="text"><strong>Premium Notifications</strong> – Each notification now has a delete button. Clear individual alerts or use "Clear All".</span>
+                        <span class="icon">🎨</span>
+                        <span class="text"><strong>Themes are here</strong> — Midnight, Light, Ocean, Sunset, Forest &amp; Rosegold. Pick one in Settings → Theme, it remembers you.</span>
                     </div>
                     <div class="whatsnew-item">
-                        <span class="icon">🛠️</span>
-                        <span class="text"><strong>Better Error Display</strong> – Download errors are now cleaner and more readable.</span>
+                        <span class="icon">💧</span>
+                        <span class="text"><strong>Liquid Glass + Calm Motion</strong> — frosted blur toggle and animation-killer, just like Nebula Cloud.</span>
                     </div>
                     <div class="whatsnew-item">
                         <span class="icon">🎛️</span>
-                        <span class="text"><strong>Settings Redesigned</strong> – Grid layout with glass cards, improved toggles, and clearer typography.</span>
+                        <span class="text"><strong>5 new toggles</strong> — Link Preview, Download Alerts, Confirm Before Delete, Liquid Glass, Calm Motion. Every row now explains its live state.</span>
                     </div>
                     <div class="whatsnew-item">
-                        <span class="icon">🔍</span>
-                        <span class="text"><strong>Auto‑detect Fix</strong> – URL detection is now more reliable.</span>
+                        <span class="icon">📱</span>
+                        <span class="text"><strong>Settings fits every device</strong> — bottom-sheet on phones, wider grid on desktop, keyboard-friendly switches.</span>
                     </div>
                 </div>
                 <button class="btn-red" onclick="closeWhatsNew()" style="margin-top:4px">Got it!</button>
@@ -2895,14 +3303,45 @@
                 </div>
             </div>
 
-            <!-- Info Modal (ℹ️) with scrollable legal list -->
+            <!-- Info Modal (ℹ️) — premium about / status / help -->
             <div class="modal-bg" id="info-modal" style="display:none" onclick="if(event.target===this)closeInfoModal()">
-                <div class="modal" style="max-width:400px;">
+                <div class="modal" style="max-width:440px;">
                     <button class="modal-close" onclick="closeInfoModal()">✕</button>
                     <h3>ℹ️ About IDLR</h3>
-                    <div style="margin-bottom:16px;">
-                        <p style="font-size:12px;color:var(--fg2);line-height:1.6;">Internet Downloader – download videos, audio, playlists from 1000+ sites. 100% local, zero data collection.</p>
+                    <div class="info-hero">
+                        <div class="info-hero-logo">IDL</div>
+                        <div>
+                            <div class="info-hero-name">IDLR <span class="info-hero-ver">v1.2.0</span></div>
+                            <div class="info-hero-sub">Internet Downloader — grab video &amp; audio from 1000+ sites. Runs 100% on your PC, zero tracking.</div>
+                        </div>
                     </div>
+                    <div class="info-stats">
+                        <div class="info-stat"><div class="info-stat-n" id="info-ver">v1.2.0</div><div class="info-stat-l">App</div></div>
+                        <div class="info-stat"><div class="info-stat-n" id="info-ytdlp">…</div><div class="info-stat-l">yt-dlp</div></div>
+                        <div class="info-stat"><div class="info-stat-n" id="info-ffmpeg">…</div><div class="info-stat-l">FFmpeg</div></div>
+                    </div>
+                    <div class="settings-section-label">What it does</div>
+                    <div>
+                        <div class="info-feat"><span class="info-feat-ico">🔗</span><span><b style="color:var(--fg)">Paste any link</b> — YouTube, Spotify, TikTok, Instagram, HLS / movie streams. The app auto-detects the site.</span></div>
+                        <div class="info-feat"><span class="info-feat-ico">🎬</span><span><b style="color:var(--fg)">Pick quality &amp; format</b> — 144p → 8K video, or 96–320 kbps audio (MP3 / M4A / FLAC / WAV / OPUS).</span></div>
+                        <div class="info-feat"><span class="info-feat-ico">⚙️</span><span><b style="color:var(--fg)">Toggles work</b> — Auto-detect, thumbnails, full playlists, animations, console &amp; login session all take effect instantly.</span></div>
+                        <div class="info-feat"><span class="info-feat-ico">🔒</span><span><b style="color:var(--fg)">Private</b> — accounts &amp; history live in <span style="font-family:'DM Mono',monospace">~/.idlr_app/</span> on your machine only.</span></div>
+                    </div>
+                    <div class="settings-section-label">Supported sources</div>
+                    <div class="info-chips">
+                        <span class="info-chip">▶ YouTube</span>
+                        <span class="info-chip">♫ Spotify</span>
+                        <span class="info-chip">◆ SoundCloud</span>
+                        <span class="info-chip">📱 TikTok</span>
+                        <span class="info-chip">📸 Instagram</span>
+                        <span class="info-chip">🐦 X / Twitter</span>
+                        <span class="info-chip">💜 Twitch</span>
+                        <span class="info-chip">🎬 HLS / Movies</span>
+                        <span class="info-chip">+ 1000 via yt-dlp</span>
+                    </div>
+                    <div class="settings-section-label">System status</div>
+                    <div class="info-sysrow"><span>Network URL</span><b id="info-network">localhost:5000</b></div>
+                    <div class="info-sysrow"><span>Save folder</span><b id="info-savepath">~/Downloads</b></div>
                     <div class="settings-section-label">Legal &amp; Support</div>
                     <div class="about-legal-list">
                         <button class="pop-action" onclick="showModal('terms');closeInfoModal()">
@@ -2926,7 +3365,7 @@
                             Send Feedback
                         </button>
                     </div>
-                    <div style="margin-top:16px;font-size:10px;color:var(--fg3);text-align:center;">© 2026 IDLR · v1.0</div>
+                    <div style="margin-top:16px;font-size:10px;color:var(--fg3);text-align:center;">© 2026 IDLR · v1.2.0 · made for fast, private downloading</div>
                 </div>
             </div>
 
@@ -3086,38 +3525,98 @@
                         <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
                     </svg>
                     Settings
+                    <span class="settings-ver-pill" id="settings-ver">v1.2.0</span>
                 </h3>
+                <p class="settings-head-sub">Every switch works instantly and is saved on this device.</p>
+
+                <div class="settings-section-label">Theme</div>
+                <div class="theme-grid" id="theme-grid">
+                    <div class="theme-option" data-theme="midnight" onclick="setTheme('midnight')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();setTheme('midnight')}" tabindex="0" role="radio" aria-checked="true">
+                        <span class="theme-swatch" style="background:linear-gradient(135deg,#050505,#ff2828)"></span>
+                        <span class="theme-name">Midnight</span><span class="theme-check">✓</span>
+                    </div>
+                    <div class="theme-option" data-theme="light" onclick="setTheme('light')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();setTheme('light')}" tabindex="0" role="radio" aria-checked="false">
+                        <span class="theme-swatch" style="background:linear-gradient(135deg,#ffffff,#c9d4e8)"></span>
+                        <span class="theme-name">Light</span><span class="theme-check">✓</span>
+                    </div>
+                    <div class="theme-option" data-theme="ocean" onclick="setTheme('ocean')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();setTheme('ocean')}" tabindex="0" role="radio" aria-checked="false">
+                        <span class="theme-swatch" style="background:linear-gradient(135deg,#041826,#0e7490)"></span>
+                        <span class="theme-name">Ocean</span><span class="theme-check">✓</span>
+                    </div>
+                    <div class="theme-option" data-theme="sunset" onclick="setTheme('sunset')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();setTheme('sunset')}" tabindex="0" role="radio" aria-checked="false">
+                        <span class="theme-swatch" style="background:linear-gradient(135deg,#6a1b3d,#c2622f)"></span>
+                        <span class="theme-name">Sunset</span><span class="theme-check">✓</span>
+                    </div>
+                    <div class="theme-option" data-theme="forest" onclick="setTheme('forest')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();setTheme('forest')}" tabindex="0" role="radio" aria-checked="false">
+                        <span class="theme-swatch" style="background:linear-gradient(135deg,#06211a,#14804f)"></span>
+                        <span class="theme-name">Forest</span><span class="theme-check">✓</span>
+                    </div>
+                    <div class="theme-option" data-theme="rosegold" onclick="setTheme('rosegold')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();setTheme('rosegold')}" tabindex="0" role="radio" aria-checked="false">
+                        <span class="theme-swatch" style="background:linear-gradient(135deg,#3a1520,#f472b6)"></span>
+                        <span class="theme-name">Rosegold</span><span class="theme-check">✓</span>
+                    </div>
+                </div>
 
                 <div class="settings-section-label">Downloads</div>
                 <div class="settings-grid">
-                    <div class="setting-row" onclick="toggleSetting('autoDetect')">
+                    <div class="setting-row" id="row-autoDetect" onclick="toggleSetting('autoDetect')" onkeydown="toggleKey(event,'autoDetect')" tabindex="0" role="switch" aria-checked="true">
                         <div class="setting-row-ico" style="background:rgba(30,215,96,.1);color:var(--grn)">🔍</div>
                         <div class="setting-row-text">
-                            <div class="setting-row-title">Auto-detect URL</div>
-                            <div class="setting-row-sub">Auto-set options on paste</div>
+                            <div class="setting-row-title"><span class="setting-state-dot"></span>Auto-detect URL</div>
+                            <div class="setting-row-sub" id="sub-autoDetect">ON — options auto-set on paste</div>
                         </div>
                         <div class="setting-row-right">
                             <div class="toggle-switch on" id="toggle-autoDetect"><div class="toggle-knob"></div></div>
                         </div>
                     </div>
-                    <div class="setting-row" onclick="toggleSetting('autoThumb')">
+                    <div class="setting-row" id="row-autoThumb" onclick="toggleSetting('autoThumb')" onkeydown="toggleKey(event,'autoThumb')" tabindex="0" role="switch" aria-checked="true">
                         <div class="setting-row-ico" style="background:rgba(245,158,11,.1);color:var(--ylw)">🖼</div>
                         <div class="setting-row-text">
-                            <div class="setting-row-title">Download Thumbnail</div>
-                            <div class="setting-row-sub">Save cover art</div>
+                            <div class="setting-row-title"><span class="setting-state-dot"></span>Download Thumbnail</div>
+                            <div class="setting-row-sub" id="sub-autoThumb">ON — cover art embedded</div>
                         </div>
                         <div class="setting-row-right">
                             <div class="toggle-switch on" id="toggle-autoThumb"><div class="toggle-knob"></div></div>
                         </div>
                     </div>
-                    <div class="setting-row" onclick="toggleSetting('playlistAll')">
+                    <div class="setting-row" id="row-autoPreview" onclick="toggleSetting('autoPreview')" onkeydown="toggleKey(event,'autoPreview')" tabindex="0" role="switch" aria-checked="true">
+                        <div class="setting-row-ico" style="background:rgba(76,139,255,.1);color:var(--blue)">👁</div>
+                        <div class="setting-row-text">
+                            <div class="setting-row-title"><span class="setting-state-dot"></span>Link Preview</div>
+                            <div class="setting-row-sub" id="sub-autoPreview">ON — fetch title &amp; cover on paste</div>
+                        </div>
+                        <div class="setting-row-right">
+                            <div class="toggle-switch on" id="toggle-autoPreview"><div class="toggle-knob"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-row" id="row-playlistAll" onclick="toggleSetting('playlistAll')" onkeydown="toggleKey(event,'playlistAll')" tabindex="0" role="switch" aria-checked="false">
                         <div class="setting-row-ico" style="background:rgba(168,85,247,.1);color:#a855f7">📋</div>
                         <div class="setting-row-text">
-                            <div class="setting-row-title">Full Playlist</div>
-                            <div class="setting-row-sub">Download entire playlist</div>
+                            <div class="setting-row-title"><span class="setting-state-dot"></span>Full Playlist</div>
+                            <div class="setting-row-sub" id="sub-playlistAll">OFF — single video only</div>
                         </div>
                         <div class="setting-row-right">
                             <div class="toggle-switch" id="toggle-playlistAll"><div class="toggle-knob"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-row" id="row-dlNotif" onclick="toggleSetting('dlNotif')" onkeydown="toggleKey(event,'dlNotif')" tabindex="0" role="switch" aria-checked="true">
+                        <div class="setting-row-ico" style="background:rgba(30,215,96,.1);color:var(--grn)">🔔</div>
+                        <div class="setting-row-text">
+                            <div class="setting-row-title"><span class="setting-state-dot"></span>Download Alerts</div>
+                            <div class="setting-row-sub" id="sub-dlNotif">ON — notify when done / failed</div>
+                        </div>
+                        <div class="setting-row-right">
+                            <div class="toggle-switch on" id="toggle-dlNotif"><div class="toggle-knob"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-row" id="row-confirmClear" onclick="toggleSetting('confirmClear')" onkeydown="toggleKey(event,'confirmClear')" tabindex="0" role="switch" aria-checked="true">
+                        <div class="setting-row-ico" style="background:rgba(245,158,11,.1);color:var(--ylw)">🛡</div>
+                        <div class="setting-row-text">
+                            <div class="setting-row-title"><span class="setting-state-dot"></span>Confirm Before Delete</div>
+                            <div class="setting-row-sub" id="sub-confirmClear">ON — ask before clearing history</div>
+                        </div>
+                        <div class="setting-row-right">
+                            <div class="toggle-switch on" id="toggle-confirmClear"><div class="toggle-knob"></div></div>
                         </div>
                     </div>
                 </div>
@@ -3150,8 +3649,8 @@
                     <div class="setting-row" onclick="doUpdateFromPanel(this)">
                         <div class="setting-row-ico" style="background:rgba(245,158,11,.1);color:var(--ylw)">🔄</div>
                         <div class="setting-row-text">
-                            <div class="setting-row-title">Update yt-dlp + spotdl</div>
-                            <div class="setting-row-sub">Keep downloaders latest</div>
+                            <div class="setting-row-title" id="sp-update-title">Update yt-dlp + spotdl</div>
+                            <div class="setting-row-sub" id="sp-update-sub">Keep downloaders latest</div>
                         </div>
                         <div class="setting-row-right">
                             <span class="setting-row-right">›</span>
@@ -3161,21 +3660,41 @@
 
                 <div class="settings-section-label">Appearance</div>
                 <div class="settings-grid">
-                    <div class="setting-row" onclick="toggleSetting('animHero')">
+                    <div class="setting-row" id="row-liquidGlass" onclick="toggleSetting('liquidGlass')" onkeydown="toggleKey(event,'liquidGlass')" tabindex="0" role="switch" aria-checked="true">
+                        <div class="setting-row-ico" style="background:rgba(76,139,255,.1);color:var(--blue)">💧</div>
+                        <div class="setting-row-text">
+                            <div class="setting-row-title"><span class="setting-state-dot"></span>Liquid Glass</div>
+                            <div class="setting-row-sub" id="sub-liquidGlass">ON — frosted blur everywhere</div>
+                        </div>
+                        <div class="setting-row-right">
+                            <div class="toggle-switch on" id="toggle-liquidGlass"><div class="toggle-knob"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-row" id="row-animHero" onclick="toggleSetting('animHero')" onkeydown="toggleKey(event,'animHero')" tabindex="0" role="switch" aria-checked="true">
                         <div class="setting-row-ico" style="background:rgba(255,32,32,.1);color:var(--red)">✨</div>
                         <div class="setting-row-text">
-                            <div class="setting-row-title">Hero Animations</div>
-                            <div class="setting-row-sub">Animate on load</div>
+                            <div class="setting-row-title"><span class="setting-state-dot"></span>Hero Animations</div>
+                            <div class="setting-row-sub" id="sub-animHero">ON — animated title on load</div>
                         </div>
                         <div class="setting-row-right">
                             <div class="toggle-switch on" id="toggle-animHero"><div class="toggle-knob"></div></div>
                         </div>
                     </div>
-                    <div class="setting-row" onclick="toggleSetting('consoleLog')">
+                    <div class="setting-row" id="row-reduceMotion" onclick="toggleSetting('reduceMotion')" onkeydown="toggleKey(event,'reduceMotion')" tabindex="0" role="switch" aria-checked="false">
+                        <div class="setting-row-ico" style="background:rgba(168,85,247,.1);color:#a855f7">🎞</div>
+                        <div class="setting-row-text">
+                            <div class="setting-row-title"><span class="setting-state-dot"></span>Calm Motion</div>
+                            <div class="setting-row-sub" id="sub-reduceMotion">OFF — full animations</div>
+                        </div>
+                        <div class="setting-row-right">
+                            <div class="toggle-switch" id="toggle-reduceMotion"><div class="toggle-knob"></div></div>
+                        </div>
+                    </div>
+                    <div class="setting-row" id="row-consoleLog" onclick="toggleSetting('consoleLog')" onkeydown="toggleKey(event,'consoleLog')" tabindex="0" role="switch" aria-checked="true">
                         <div class="setting-row-ico" style="background:rgba(76,139,255,.1);color:var(--blue)">🖥</div>
                         <div class="setting-row-text">
-                            <div class="setting-row-title">Console Log</div>
-                            <div class="setting-row-sub">Show live output</div>
+                            <div class="setting-row-title"><span class="setting-state-dot"></span>Console Log</div>
+                            <div class="setting-row-sub" id="sub-consoleLog">ON — live output visible</div>
                         </div>
                         <div class="setting-row-right">
                             <div class="toggle-switch on" id="toggle-consoleLog"><div class="toggle-knob"></div></div>
@@ -3185,11 +3704,11 @@
 
                 <div class="settings-section-label">Account</div>
                 <div class="settings-grid">
-                    <div class="setting-row" onclick="toggleSetting('saveLogins')">
+                    <div class="setting-row" id="row-saveLogins" onclick="toggleSetting('saveLogins')" onkeydown="toggleKey(event,'saveLogins')" tabindex="0" role="switch" aria-checked="true">
                         <div class="setting-row-ico" style="background:rgba(255,171,64,.1);color:var(--ylw)">🔑</div>
                         <div class="setting-row-text">
-                            <div class="setting-row-title">Save Login Session</div>
-                            <div class="setting-row-sub">Stay signed in across restarts</div>
+                            <div class="setting-row-title"><span class="setting-state-dot"></span>Save Login Session</div>
+                            <div class="setting-row-sub" id="sub-saveLogins">ON — stay signed in</div>
                         </div>
                         <div class="setting-row-right">
                             <div class="toggle-switch on" id="toggle-saveLogins"><div class="toggle-knob"></div></div>
@@ -3208,7 +3727,7 @@
                 </div>
 
                 <div style="text-align:center;padding:20px 0 4px;font-size:10px;color:var(--fg3)">
-                    IDLR — Internet Downloader · © 2026
+                    IDLR — Internet Downloader · © 2026 · <span id="settings-ver-foot">v1.2.0</span>
                 </div>
             </div>
         </div>
@@ -3416,7 +3935,7 @@
             if (m) m.classList.add('closing');
             setTimeout(() => { bg.style.display = 'none';
                 bg.classList.remove('closing'); if (m) m.classList.remove('closing'); }, 250);
-            localStorage.setItem('idlr_whatsnew_shown', 'true');
+            localStorage.setItem('idlr_whatsnew_v120_shown', 'true');
         }
 
         /* ══ FEEDBACK MODAL ══ */
@@ -3466,6 +3985,11 @@
             document.getElementById('info-modal').classList.remove('closing');
             const m = document.getElementById('info-modal').querySelector('.modal');
             if (m) m.classList.remove('closing');
+            try { loadInfo(); } catch (e) {}
+            try {
+                const sp = document.getElementById('info-savepath');
+                if (sp) sp.textContent = (_savedPath || DPATH || '~/Downloads');
+            } catch (e) {}
         }
 
         function closeInfoModal() {
@@ -3668,16 +4192,19 @@
             }
 
             const m = SITES.find(s => s.test(url));
+            const autoOn = (typeof _settingsState === 'undefined') ? true : _settingsState.autoDetect !== false;
             if (m) {
                 if (icon) { icon.className = 'site-icon detected';
                     emoji.textContent = m.emoji; }
                 if (badge) { badge.className = 'detect-badge ' + m.cls;
                     badge.textContent = m.emoji + '  ' + m.name; }
-                if (auto) auto.textContent = '→ ' + m.note(url);
+                if (auto) auto.textContent = '→ ' + m.note(url) + (autoOn ? '' : '  (auto-set OFF — options unchanged)');
                 if (row) row.style.display = 'flex';
-                const newMode = m.autoMode(url);
-                if (_dd.mode !== newMode) pickDD('mode', newMode);
-                if (_dd.format !== m.autoFmt) pickDD('format', m.autoFmt);
+                if (autoOn) {
+                    const newMode = m.autoMode(url);
+                    if (_dd.mode !== newMode) pickDD('mode', newMode);
+                    if (_dd.format !== m.autoFmt) pickDD('format', m.autoFmt);
+                }
             } else {
                 if (icon) { icon.className = 'site-icon detected';
                     emoji.textContent = '🌐'; }
@@ -3688,7 +4215,8 @@
             }
 
             clearTimeout(_previewTimer);
-            _previewTimer = setTimeout(() => fetchPreview(url), 800);
+            const previewOn = (typeof _settingsState === 'undefined') ? true : _settingsState.autoPreview !== false;
+            if (previewOn) _previewTimer = setTimeout(() => fetchPreview(url), 800);
         }
 
         async function fetchPreview(url) {
@@ -3820,12 +4348,13 @@
         function launch(user) {
             if (!user || !user.email) { console.warn('launch: invalid user'); return; }
             U = user;
-            // Save session based on toggle
-            if (document.getElementById('toggle-saveLogins')?.classList.contains('on')) {
+            // Save session only if the "Save Login Session" toggle is ON
+            const wantSave = (typeof _settingsState === 'undefined') ? true : _settingsState.saveLogins !== false;
+            if (wantSave) {
                 try { localStorage.setItem('idlr_u', JSON.stringify(user)); } catch (e) { console.warn(
                     'Could not save session', e); }
             } else {
-                localStorage.removeItem('idlr_u');
+                try { localStorage.removeItem('idlr_u'); } catch (e) {}
             }
             try { saveAccountToList(user); } catch (e) {}
             document.getElementById('login-screen').style.display = 'none';
@@ -3846,8 +4375,8 @@
             addNotification('Welcome back! Ready to download.', 'info');
             hideLoading();
 
-            // Show What's New if not shown before
-            if (!localStorage.getItem('idlr_whatsnew_shown')) {
+            // Show What's New for this version if not shown before
+            if (!localStorage.getItem('idlr_whatsnew_v120_shown')) {
                 setTimeout(openWhatsNew, 800);
             }
         }
@@ -4030,9 +4559,10 @@
             if (!U) return;
             const prefs = { mode: _dd.mode, quality: _dd.quality, format: _dd.format, savepath: _savedPath || '' };
             U.prefs = prefs;
-            // Save session based on toggle
-            if (document.getElementById('toggle-saveLogins')?.classList.contains('on')) {
-                localStorage.setItem('idlr_u', JSON.stringify(U));
+            // Save session only if the toggle is ON
+            const wantSave = (typeof _settingsState === 'undefined') ? true : _settingsState.saveLogins !== false;
+            if (wantSave) {
+                try { localStorage.setItem('idlr_u', JSON.stringify(U)); } catch (e) {}
             }
             if (_savedPath) localStorage.setItem('idlr_savepath', _savedPath);
             try {
@@ -4101,7 +4631,9 @@
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ url, mode: _dd.mode, quality: _dd.quality, format: _dd.format, path: _savedPath ||
-                        '', user: U?.email || '' })
+                        '', user: U?.email || '',
+                    thumb: (typeof _settingsState === 'undefined') ? true : _settingsState.autoThumb !== false,
+                    playlist_all: (typeof _settingsState !== 'undefined') && _settingsState.playlistAll === true })
             });
             const d = await r.json();
             if (!r.ok) { setStat('Error: ' + d.error, 'red');
@@ -4137,12 +4669,14 @@
                         document.getElementById('now-status').textContent = 'Saved ✓';
                         toast('Download complete! ✓', 'ok');
                         const title = p.title || 'Download';
-                        addNotification(`Download complete: ${title}`, 'success');
+                        if ((typeof _settingsState === 'undefined') || _settingsState.dlNotif !== false)
+                            addNotification(`Download complete: ${title}`, 'success');
                     } else {
                         setStat('Failed: ' + (p.error || 'Unknown'), 'red');
                         document.getElementById('now-status').textContent = 'Failed ✗';
                         toast('Download failed', 'err');
-                        addNotification(`Download failed: ${p.error || 'Unknown error'}`, 'update');
+                        if ((typeof _settingsState === 'undefined') || _settingsState.dlNotif !== false)
+                            addNotification(`Download failed: ${p.error || 'Unknown error'}`, 'update');
                     }
                 }
             };
@@ -4235,7 +4769,8 @@
 
         async function bulkDelete() {
             if (!_selected.size) { toast('Select items first', 'err'); return; }
-            if (!confirm(`Delete ${_selected.size} item(s) from history?`)) return;
+            const needConfirm = (typeof _settingsState === 'undefined') ? true : _settingsState.confirmClear !== false;
+            if (needConfirm && !confirm(`Delete ${_selected.size} item(s) from history?`)) return;
             for (const url of _selected) {
                 await fetch('/api/history/remove', { method: 'DELETE', headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ user: U.email, url }) });
@@ -4379,7 +4914,8 @@
         }
 
         async function clearHist() {
-            if (!confirm('Delete all your download history?')) return;
+            const needConfirm = (typeof _settingsState === 'undefined') ? true : _settingsState.confirmClear !== false;
+            if (needConfirm && !confirm('Delete all your download history?')) return;
             await fetch('/api/history/clear?user=' + encodeURIComponent(U.email), { method: 'DELETE' });
             _histItems = [];
             _selected.clear();
@@ -4401,6 +4937,19 @@
                 }
                 const fb = document.getElementById('sp-ffmpeg');
                 if (fb) fb.textContent = d.ffmpeg ? '✓ FFmpeg' : '✓ Built-in';
+                // premium Info modal mirrors
+                const iy = document.getElementById('info-ytdlp');
+                if (iy) iy.textContent = 'v' + (d.ytdlp || '—');
+                const im = document.getElementById('info-ffmpeg');
+                if (im) im.textContent = d.ffmpeg ? '✓ Yes' : '✗ No';
+                const inet = document.getElementById('info-network');
+                if (inet) inet.textContent = (d.network || 'localhost:5000').replace('http://', '');
+                const isp = document.getElementById('info-savepath');
+                if (isp) isp.textContent = (_savedPath || DPATH || '~/Downloads');
+                if (d.version) {
+                    const iv = document.getElementById('info-ver');
+                    if (iv) iv.textContent = 'v' + d.version;
+                }
             } catch (e) { console.warn('loadInfo error', e); }
         }
 
@@ -4454,9 +5003,10 @@
                 err.style.display = 'block'; return; }
             U = Object.assign(U, d);
             delete U._pendingAvatar;
-            // Save session if toggle is on
-            if (document.getElementById('toggle-saveLogins')?.classList.contains('on')) {
-                localStorage.setItem('idlr_u', JSON.stringify(U));
+            // Save session only if the toggle is ON
+            const wantSave = (typeof _settingsState === 'undefined') ? true : _settingsState.saveLogins !== false;
+            if (wantSave) {
+                try { localStorage.setItem('idlr_u', JSON.stringify(U)); } catch (e) {}
             }
             fillUserUI();
             closeProfModal();
@@ -4545,29 +5095,125 @@
             }
         }
 
-        /* ══ TOGGLE SETTINGS SWITCHES ══ */
+        /* ══ TOGGLE SETTINGS SWITCHES — every toggle does something real ══ */
         const _settingsState = {
-            autoDetect: true,
-            autoThumb: true,
-            playlistAll: false,
-            animHero: true,
-            consoleLog: true,
-            saveLogins: true,
+            autoDetect: true,    // auto-switch Mode/Format when a URL is pasted
+            autoThumb: true,     // embed + save thumbnails (sent to backend)
+            autoPreview: true,   // fetch title/thumbnail preview on paste
+            playlistAll: false,  // download full playlists even in single mode
+            dlNotif: true,       // notification on download done/failed
+            confirmClear: true,  // confirm before clearing history
+            liquidGlass: true,   // frosted blur (Nebula-style)
+            animHero: true,      // hero title + chip animations
+            reduceMotion: false, // kill all animations (accessibility)
+            consoleLog: true,    // show live console output under progress
+            saveLogins: true,    // keep session in localStorage
         };
 
+        const _settingHints = {
+            autoDetect: ['Auto-detect URL', 'Auto-set options on paste'],
+            autoThumb: ['Download Thumbnail', 'Save cover art'],
+            autoPreview: ['Link Preview', 'Fetch title & cover on paste'],
+            playlistAll: ['Full Playlist', 'Download entire playlist'],
+            dlNotif: ['Download Alerts', 'Notify when done / failed'],
+            confirmClear: ['Confirm Before Delete', 'Ask before clearing history'],
+            liquidGlass: ['Liquid Glass', 'Frosted blur everywhere'],
+            animHero: ['Hero Animations', 'Animate on load'],
+            reduceMotion: ['Calm Motion', 'Reduce animations'],
+            consoleLog: ['Console Log', 'Show live output'],
+            saveLogins: ['Save Login Session', 'Stay signed in across restarts'],
+        };
+
+        // Live sub-texts: each row explains its CURRENT state (better info).
+        const _settingSubs = {
+            autoDetect: ['ON — options auto-set on paste', 'OFF — badge only, options untouched'],
+            autoThumb: ['ON — cover art embedded', 'OFF — faster, fewer FFmpeg errors'],
+            autoPreview: ['ON — fetch title & cover on paste', 'OFF — no auto preview'],
+            playlistAll: ['ON — entire playlist downloads', 'OFF — single video only'],
+            dlNotif: ['ON — notify when done / failed', 'OFF — silent downloads'],
+            confirmClear: ['ON — ask before clearing history', 'OFF — delete immediately'],
+            liquidGlass: ['ON — frosted blur everywhere', 'OFF — solid, faster paint'],
+            animHero: ['ON — animated title on load', 'OFF — static title'],
+            reduceMotion: ['ON — animations minimised', 'OFF — full animations'],
+            consoleLog: ['ON — live output visible', 'OFF — console hidden'],
+            saveLogins: ['ON — stay signed in', 'OFF — sign in each visit'],
+        };
+
+        function toggleKey(e, key) {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleSetting(key); }
+        }
+
         function toggleSetting(key) {
+            if (!(_settingsState.hasOwnProperty(key))) return;
             _settingsState[key] = !_settingsState[key];
             const el = document.getElementById('toggle-' + key);
-            if (el) el.className = 'toggle-switch' + (_settingsState[key] ? ' on' : '');
-            localStorage.setItem('idlr_settings', JSON.stringify(_settingsState));
-            // If toggling saveLogins, update session storage
-            if (key === 'saveLogins' && U) {
-                if (_settingsState[key]) {
-                    localStorage.setItem('idlr_u', JSON.stringify(U));
-                } else {
-                    localStorage.removeItem('idlr_u');
-                }
+            if (el) {
+                el.className = 'toggle-switch' + (_settingsState[key] ? ' on' : '');
+                el.setAttribute('aria-checked', _settingsState[key] ? 'true' : 'false');
+                el.style.transform = 'scale(.92)';
+                setTimeout(() => { el.style.transform = ''; }, 150);
             }
+            const row = document.getElementById('row-' + key);
+            if (row) {
+                row.classList.toggle('is-on', !!_settingsState[key]);
+                row.setAttribute('aria-checked', _settingsState[key] ? 'true' : 'false');
+            }
+            const sub = document.getElementById('sub-' + key);
+            if (sub && _settingSubs[key]) sub.textContent = _settingSubs[key][_settingsState[key] ? 0 : 1];
+            try { localStorage.setItem('idlr_settings', JSON.stringify(_settingsState)); } catch (e) {}
+            applySettingsEffects();
+            // If toggling saveLogins, update session storage immediately
+            if (key === 'saveLogins' && typeof U !== 'undefined' && U) {
+                try {
+                    if (_settingsState[key]) localStorage.setItem('idlr_u', JSON.stringify(U));
+                    else localStorage.removeItem('idlr_u');
+                } catch (e) {}
+            }
+            const label = _settingHints[key] ? _settingHints[key][0] : key;
+            toast(`${label}: ${_settingsState[key] ? 'ON ✓' : 'OFF'}`, _settingsState[key] ? 'ok' : '');
+            if (typeof savePrefs === 'function') savePrefs();
+        }
+
+        // Apply toggle side-effects to the visible UI instantly.
+        function applySettingsEffects() {
+            document.body.classList.toggle('no-anim', !_settingsState.animHero);
+            document.body.classList.toggle('hide-console', !_settingsState.consoleLog);
+            document.body.classList.toggle('liquid-glass', _settingsState.liquidGlass !== false);
+            document.body.classList.toggle('reduce-motion', _settingsState.reduceMotion === true);
+            Object.keys(_settingsState).forEach(key => {
+                const row = document.getElementById('row-' + key);
+                if (row) row.classList.toggle('is-on', !!_settingsState[key]);
+                const t = document.getElementById('toggle-' + key);
+                if (t) t.setAttribute('aria-checked', _settingsState[key] ? 'true' : 'false');
+                const sub = document.getElementById('sub-' + key);
+                if (sub && _settingSubs[key]) sub.textContent = _settingSubs[key][_settingsState[key] ? 0 : 1];
+            });
+        }
+
+        /* ══ THEMES (Nebula-style: body[data-theme], persisted) ══ */
+        const IDLR_THEMES = ['midnight', 'light', 'ocean', 'sunset', 'forest', 'rosegold'];
+        function setTheme(name) {
+            if (!IDLR_THEMES.includes(name)) name = 'midnight';
+            document.body.setAttribute('data-theme', name);
+            try { localStorage.setItem('idlr_theme', name); } catch (e) {}
+            updateActiveTheme();
+            const nice = name.charAt(0).toUpperCase() + name.slice(1);
+            if (typeof toast === 'function') toast(`Theme: ${nice}`, 'ok');
+        }
+        function updateActiveTheme() {
+            const cur = document.body.getAttribute('data-theme') || 'midnight';
+            document.querySelectorAll('.theme-option').forEach(el => {
+                const on = el.dataset.theme === cur;
+                el.classList.toggle('active-theme', on);
+                el.setAttribute('aria-checked', on ? 'true' : 'false');
+            });
+        }
+        function loadTheme() {
+            let t = 'midnight';
+            try { t = localStorage.getItem('idlr_theme') || 'midnight'; } catch (e) {}
+            if (!IDLR_THEMES.includes(t)) t = 'midnight';
+            document.body.setAttribute('data-theme', t);
+            updateActiveTheme();
         }
 
         function loadSettingsState() {
@@ -4582,6 +5228,8 @@
                 const el = document.getElementById('toggle-' + key);
                 if (el) el.className = 'toggle-switch' + (_settingsState[key] ? ' on' : '');
             });
+            loadTheme();
+            applySettingsEffects();
         }
 
         /* ══ UPDATE FROM SETTINGS PANEL ══ */
