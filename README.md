@@ -10,7 +10,7 @@ Everything runs locally on your machine.
 ![yt‑dlp](https://img.shields.io/badge/yt--dlp-latest-orange)
 ![spotdl](https://img.shields.io/badge/spotdl-latest-brightgreen)
 
-> **Current version: v1.1.0** — see [Changelog](#-changelog) for what just got fixed.
+> **Current version: v1.2.0** — see [Changelog](#-changelog) for what just got fixed.
 
 ---
 
@@ -21,6 +21,7 @@ Everything runs locally on your machine.
 - 🔍 **Live URL detection** – paste a link and the UI instantly recognises the platform (+ optional auto‑set of Mode/Format)
 - 🖼️ **Thumbnail preview** – see title, uploader, duration & cover before you download
 - 🎛️ **Settings toggles that actually work** – every switch changes real behaviour (see table below)
+- 🎨 **6 themes + Liquid Glass** – Midnight, Light, Ocean, Sunset, Forest, Rosegold, like Nebula Cloud (kept small on purpose)
 - ℹ️ **Premium Info panel (ⓘ)** – live app / yt‑dlp / FFmpeg versions, network URL, save folder, supported sites
 - 📋 **Bulk history management** – search, select, rename ✏️, re‑download, or delete entries
 - 🖥️ **Honest terminal output** – `python app.py` shows setup, per‑download progress, `DONE` / `FAILED` reasons
@@ -113,14 +114,23 @@ All settings live in the in‑app Settings panel (gear icon). They save to your 
 
 | Setting | Default | What it actually does |
 |---------|---------|----------------------|
+| Theme | Midnight | 6 themes: Midnight, Light, Ocean, Sunset, Forest, Rosegold. Saved per device (`idlr_theme`), applied before first paint (no flash) |
+| Liquid Glass | ON | Frosted blur on cards, modals & topbar (Nebula-style). OFF = solid surfaces, faster paint |
 | Auto‑detect URL | ON | Auto‑switches Mode/Format on paste (e.g. Spotify → Audio/MP3). OFF = badge only, your options stay untouched |
 | Download Thumbnail | ON | Embeds & saves cover art. OFF = no `writethumbnail`/`EmbedThumbnail`, faster + fewer FFmpeg failures |
+| Link Preview | ON | Fetches title, uploader, duration & cover on paste. OFF = no auto preview calls |
 | Full Playlist | OFF | ON = downloads the whole playlist even in single Video/Audio mode (`noplaylist=false`) |
+| Download Alerts | ON | Bell notification when a download finishes or fails. OFF = silent |
+| Confirm Before Delete | ON | Asks before bulk/clear history deletes. OFF = delete immediately |
 | Hero Animations | ON | Animated hero title + chips. OFF = static, instant (adds `no-anim` to page) |
+| Calm Motion | OFF | ON = minimises all animations site-wide (accessibility, `reduce-motion`) |
 | Console Log | ON | Live download output under the progress bar. OFF = console hidden (`hide-console`) |
 | Save Login Session | ON | Keeps you signed in across restarts (`localStorage`). OFF = session cleared on login |
 | Save folder | `~/Downloads` | Where finished files go. Click the path bar to change |
 | Update yt‑dlp + spotdl | — | One‑click updater in Settings (shows Updating… → Updated ✓ / error) |
+
+> The panel is responsive: bottom-sheet on phones (≤560px), 2-column grid on tablets/desktops.
+> Every row shows its live state (e.g. “ON — cover art embedded”), toggles are keyboard-friendly (Enter/Space), and switches animate with a spring knob + glow.
 
 > All data (accounts, history) is stored locally in `~/.idlr_app/` (`accounts.json`, `history.json`).
 > Nothing is ever sent anywhere except the download request to the source site.
@@ -173,6 +183,32 @@ No `requirements.txt`, `static/` or `templates/` folders — the app is intentio
 ---
 
 ## 📜 Changelog
+
+### v1.2.0 — themes + settings glow-up
+
+**New — themes (Nebula-style, small set)**
+
+- 6 themes: **Midnight** (default), **Light**, **Ocean**, **Sunset**, **Forest**, **Rosegold** — `body[data-theme]` variable overrides, saved as `idlr_theme`, applied before first paint (no white flash).
+- **Light theme** done properly: dark text + tinted surfaces, not just inverted vars.
+- Accent color (`--red`) follows the theme, so toggles, buttons, badges and glows all match.
+
+**New — 5 more toggles (all functional)**
+
+| Toggle | Default | Effect |
+|--------|---------|--------|
+| Link Preview | ON | OFF = no auto title/cover fetch on paste |
+| Download Alerts | ON | OFF = no bell notification on done/failed |
+| Confirm Before Delete | ON | OFF = bulk/clear history deletes skip `confirm()` |
+| Liquid Glass | ON | OFF = solid surfaces, faster paint (`body.liquid-glass`) |
+| Calm Motion | OFF | ON = site-wide animation kill (`body.reduce-motion`, accessibility) |
+
+**Redesigned — Settings GUI**
+
+- Fits every device: bottom-sheet on phones (≤560px, safe-area padding), auto-fit grid on tablets/desktops, `86–92dvh` scrolling, `clamp()` padding.
+- Better info: each row has a live status dot + sub-text describing its CURRENT state (updates on every flip).
+- Animation: spring knob (`cubic-bezier(.34,1.8,.64,1)`), glow pop on enable, hover grow, press squash, keyboard support (Tab + Enter/Space, `role="switch"`, focus rings).
+- Theme picker: swatch cards with active ring + check, same interaction language as Nebula Cloud.
+- Small global mobile fit: wrapping topbar, full-width Download button, single-column options.
 
 ### v1.1.0 — reliability + honest UI update
 
